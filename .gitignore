@@ -1,3 +1,4 @@
 *.log
 vendor/
 info.php
+phpunit.xml

@@ -4,7 +4,11 @@
     },
 
     "autoload": {
-        "psr-4": {"Myapp\\": "src/"}
+        "psr-4": {
+            "Myapp\\": "src/",
+            "Test\\": "test/",
+            "Test\\DatabaseDAO\\": "test/db/"
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1",
