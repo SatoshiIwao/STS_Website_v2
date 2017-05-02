@@ -1,6 +1,7 @@
 {
     "require": {
-        "monolog/monolog": "1.5.*"
+        "monolog/monolog": "1.5.*",
+        "codeigniter/framework": "3.1.*"
     },
 
     "autoload": {

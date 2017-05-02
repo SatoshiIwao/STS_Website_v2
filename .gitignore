@@ -2,3 +2,6 @@
 vendor/
 info.php
 phpunit.xml
+application/cache
+application/logs
+application/config
