@@ -4,4 +4,7 @@ web development from scratch
 PHP
 composer
 Monolog
+phpunit
+dbunit
+CodeIgniter
 
