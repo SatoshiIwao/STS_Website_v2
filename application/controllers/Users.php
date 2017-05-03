@@ -16,6 +16,8 @@ class Users extends MY_Controller {
  
     public function login()
     {
+        log_message("debug", "=== enter Users:login method");
+ 
         $this->data['title'] = "Login";
 		
 	$this->load->library('form_validation');
@@ -23,19 +25,31 @@ class Users extends MY_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
         if ($this->form_validation->run() === FALSE)
         {
+
+            log_message("debug", "=== Users:login: failed form validation");
+
 	    $this->load->helper('form');
             $this->render('users/login_view');
         }
         else
         {
+
+            log_message("debug", "=== Users:login success form validation");
+
             $this->ion_auth->set_hook('post_login_successful', 'get_gravatar_hash', $this, '_gravatar', array());
             $remember = (bool) $this->input->post('remember');
             if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
             {
+
+                log_message("debug", "=== Users:login ion auth login success");
+
                 redirect('dashboard');
             }
             else
             {
+
+                log_message("debug", "=== Users:login ion auth login failed");
+
                 $_SESSION['auth_message'] = $this->ion_auth->errors();
                 $this->session->mark_as_flash('auth_message');
                 redirect('users/login');

@@ -5,17 +5,29 @@
         echo isset($_SESSION['auth_message']) ? $_SESSION['auth_message'] : FALSE;
     ?>
 
-    <h1>Login in</h1>
-    <?php
-    echo form_open();
-    echo form_label('Username:','username').'<br />';
-    echo form_error('username');
-    echo form_input('username').'<br />';
-    echo form_label('Password:', 'password').'<br />';
-    echo form_error('password');
-    echo form_password('password').'<br />';
-    echo form_checkbox('remember','1',FALSE).' Remember me<br />';
-    echo form_submit('submit','Log In');
-    echo form_close();
-    ?>
+    <div class="row">
+    <h1>Login</h1>
+    <div class="col-lg-4 col-lg-offset-4">
+        <div class="login-message"></div>
+        <?php echo form_open('users/login',array('class'=>'login-form form-horizontal'));?>
+        <div class="form-group">
+            <?php echo form_label('Username','username');?>
+            <div class="username_error"></div>
+            <?php echo form_input('username','','class="form-control" id="username"');?>
+        </div>
+        <div class="form-group">
+            <?php echo form_label('Password','password');?>
+            <div class="password_error"></div>
+            <?php echo form_password('password','','class="form-control" id="password"');?>
+        </div>
+        <div class="form-group">
+            <label>
+                <?php echo form_checkbox('remember','1',FALSE);?> Remember me
+            </label>
+        </div>
+        <?php echo form_submit('submit', 'Log in', 'class="btn btn-primary btn-lg btn-block" id="login-button"');?>
+        <?php echo form_close();?>
+    </div>
+    </div>
+
 </div>
