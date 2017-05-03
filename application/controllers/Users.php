@@ -28,6 +28,7 @@ class Users extends MY_Controller {
         }
         else
         {
+            $this->ion_auth->set_hook('post_login_successful', 'get_gravatar_hash', $this, '_gravatar', array());
             $remember = (bool) $this->input->post('remember');
             if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
             {
@@ -40,6 +41,16 @@ class Users extends MY_Controller {
                 redirect('users/login');
             }
         }
+    }
+
+    public function _gravatar()
+    {
+        if($this->form_validation->valid_email($_SESSION['email']))
+        {
+            $gravatar_url = md5(strtolower(trim($_SESSION['email'])));
+            $_SESSION['gravatar'] = $gravatar_url;
+        }
+        return TRUE;
     }
  
     public function logout()
