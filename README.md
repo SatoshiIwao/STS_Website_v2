@@ -7,4 +7,5 @@ Monolog
 phpunit
 dbunit
 CodeIgniter
+Ion Auth 
 
