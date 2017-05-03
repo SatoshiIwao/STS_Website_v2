@@ -8,8 +8,31 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="<?php echo src_url();?>src/js/bootstrap.min.js"></script>
+    <script src="<?php echo src_url();?>js/bootstrap.min.js"></script>
 
-<?php echo $before_closing_body;?>
+    <?php echo $before_closing_body;?>
+
+    <script>
+    $('.login-form').on('submit', function(e)
+    {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.ajax({
+            url: "<?php echo site_url('users/login');?>",
+            type: "post",
+            data: {ajax: 1, username: username, password: password},
+            cache: false,
+            success: function (json) {
+                var error_message = json.error;
+                if(typeof error_message !== "undefined")
+                {
+                    $(".login-message").html(error_message);
+                } 
+            }
+        });
+        e.preventDefault();
+    });
+    </script>
+
 </body>
 </html>

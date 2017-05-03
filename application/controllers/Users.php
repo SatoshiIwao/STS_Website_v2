@@ -50,6 +50,20 @@ class Users extends MY_Controller {
 
                 log_message("debug", "=== Users:login ion auth login failed");
 
+                if($this->input->post('ajax'))
+      	        {
+
+                    log_message("debug", "=== Users:login post ajax");
+
+		    $response['error'] = $this->ion_auth->errors();
+		    header("content-type:application/json");
+
+                    log_message("debug", "=== Users:login post ajax: response " . $response['error']);
+
+		    echo json_encode($response);
+		    exit;
+	        }
+
                 $_SESSION['auth_message'] = $this->ion_auth->errors();
                 $this->session->mark_as_flash('auth_message');
                 redirect('users/login');
@@ -66,7 +80,14 @@ class Users extends MY_Controller {
         }
         return TRUE;
     }
- 
+/*
+    public function ajax_login()
+    {
+	$response['message'] = 'hello';
+	header("content-type:application/json");
+	echo json_encode($response);
+    }
+ */
     public function logout()
     {
 	$this->ion_auth->logout();
