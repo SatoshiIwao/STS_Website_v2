@@ -11,3 +11,4 @@
     <?php echo $before_closing_head;?>
 </head>
 <body>
+<div class="container"><?php echo anchor('users/logout', 'Logout');?></div>
