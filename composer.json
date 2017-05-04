@@ -1,9 +1,16 @@
 {
+    "name": "stswebsite/application",
+    "authors" : [
+        {
+            "name": "sts",
+            "email" : "nirnirva.s.t.s1551@gmail.com"
+        }
+    ],
     "require": {
         "monolog/monolog": "1.5.*",
-        "codeigniter/framework": "3.1.*"
+        "codeigniter/framework": "3.1.*",
+        "facebook/graph-sdk": "^5.5"
     },
-
     "autoload": {
         "psr-4": {
             "Myapp\\": "src/",

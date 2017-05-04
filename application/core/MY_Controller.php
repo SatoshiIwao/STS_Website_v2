@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class MY_Controller extends CI_Controller {
  
     protected $data = array();
+    protected $fb;
     function __construct()
     {
         log_message("debug", "enter MY_Controller:construct method");

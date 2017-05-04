@@ -23,11 +23,21 @@ class Users extends MY_Controller {
 	$this->load->library('form_validation');
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('ajax','AJAX','trim|is_natural');
+
         if ($this->form_validation->run() === FALSE)
         {
 
             log_message("debug", "=== Users:login: failed form validation");
 
+            if($this->input->post('ajax'))
+	    {
+		$response['username_error'] = form_error('username');
+                $response['password_error'] = form_error('password');
+		header("content-type:application/json");
+		echo json_encode($response);
+		exit;
+	    }
 	    $this->load->helper('form');
             $this->render('users/login_view');
         }
@@ -36,13 +46,27 @@ class Users extends MY_Controller {
 
             log_message("debug", "=== Users:login success form validation");
 
-            $this->ion_auth->set_hook('post_login_successful', 'get_gravatar_hash', $this, '_gravatar', array());
             $remember = (bool) $this->input->post('remember');
-            if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'), $remember))
+            $username = $this->input->post('username');
+	    $password = $this->input->post('password');
+
+            $this->ion_auth->set_hook('post_login_successful', 'get_gravatar_hash', $this, '_gravatar', array());
+  
+            if ($this->ion_auth->login($username, $password, $remember))
             {
 
                 log_message("debug", "=== Users:login ion auth login success");
 
+                if($this->input->post('ajax'))
+	        {
+
+                    log_message("debug", "=== Users:login success post ajax");
+
+		    $response['logged_in'] = 1;
+		    header("content-type:application/json");
+		    echo json_encode($response);
+		    exit;
+	        } 
                 redirect('dashboard');
             }
             else
@@ -53,8 +77,10 @@ class Users extends MY_Controller {
                 if($this->input->post('ajax'))
       	        {
 
-                    log_message("debug", "=== Users:login post ajax");
+                    log_message("debug", "=== Users:login failed post ajax");
 
+                    $response['username'] = $username;
+		    $response['password'] = $password;
 		    $response['error'] = $this->ion_auth->errors();
 		    header("content-type:application/json");
 
@@ -92,7 +118,7 @@ class Users extends MY_Controller {
     {
 	$this->ion_auth->logout();
 	redirect('users/login');
-    }
+    } 
 }
 
 ?>

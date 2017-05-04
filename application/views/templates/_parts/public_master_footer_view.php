@@ -24,9 +24,19 @@
             cache: false,
             success: function (json) {
                 var error_message = json.error;
+                var success = json.logged_in;
                 if(typeof error_message !== "undefined")
                 {
                     $(".login-message").html(error_message);
+                }
+                else if(typeof success !== "undefined" && success=="1")
+                {
+                    $(".login-message").html("You've been successfully logged in!");
+                    $(".login-form").hide();
+                }
+                else {
+                    $(".username_error").html(json.username_error);
+                    $(".password_error").html(json.password_error);
                 } 
             }
         });
